@@ -1,0 +1,36 @@
+[
+    {
+      "id": "1",
+      "title": "Frontend Trackify",
+      "category": "Frontend",
+      "createdOn": "2024-06-01",
+      "modifiedDate": "2024-06-02",
+      "dueDate": "2024-06-03",
+      "hoursSpent": "2 hours",
+      "notes": "### Frontend Notes\n- Set up the React components\n- Add styling with Tailwind CSS\n- Ensure responsiveness",
+      "status": "Ongoing"
+    },
+    {
+      "id": "2",
+      "title": "Backend Tracker",
+      "category": "Backend",
+      "createdOn": "2024-05-28",
+      "modifiedDate": "2024-05-30",
+      "dueDate": "2024-06-02",
+      "hoursSpent": "5 hours",
+      "notes": "### Backend Notes\n- Create database schema\n- Develop API endpoints\n- Implement authentication",
+      "status": "Ongoing"
+    },
+    {
+      "id": "3",
+      "title": "DevOps Pipeline Setup",
+      "category": "DevOps",
+      "createdOn": "2024-05-25",
+      "modifiedDate": "2024-05-27",
+      "dueDate": "2024-06-01",
+      "hoursSpent": "3 hours",
+      "notes": "### DevOps Notes\n- Configure CI/CD pipeline\n- Automate deployment\n- Set up monitoring tools",
+      "status": "Completed"
+    }
+  ]
+  
