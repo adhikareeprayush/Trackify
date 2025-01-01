@@ -32,17 +32,15 @@ const Task = () => {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold">{task.title}</h1>
-      <p><strong>Category:</strong> {task.category}</p>
-      <p><strong>Created Date:</strong> {task.createdDate}</p>
-      <p><strong>Modified Date:</strong> {task.modifiedDate}</p>
-      <p><strong>Due Date:</strong> {task.dueDate}</p>
-      <p><strong>Time Spent:</strong> {task.timeSpent}</p>
-      <div>
-        <h2 className="text-2xl font-semibold mt-4">Notes:</h2>
-        <div className="bg-gray-100 p-3 rounded-md">
-          <pre>{task.notes}</pre>
+    <div className="min-h-screen flex flex-col items-start justify-start ml-[300px] flex-1">
+      <div className="flex flex-col border-b-[1px] border-slate-200 w-full pb-3">
+        <div className="w-full h-[320px] bg-red-500">
+          <img src="https://images.unsplash.com/photo-1731432245362-26f9c0f1ba2f?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="w-full h-full object-cover" />
+        </div>
+        <div className="flex flex-col w-full p-4">
+        <h3 className="text-2xl ">
+          {task.title}
+        </h3>
         </div>
       </div>
     </div>
