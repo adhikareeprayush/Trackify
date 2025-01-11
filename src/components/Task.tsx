@@ -1,64 +1,143 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Clock, Calendar, Tag, Timer, Trash2 } from "lucide-react";
+import { taskStore, type Task as TaskType } from "../utils/taskStore";
 
 const Task = () => {
   const { id } = useParams<{ id: string }>();
-  interface TaskType {
-    id: string;
-    title: string;
-    category: string;
-    createdOn: string;
-    modifiedDate: string;
-    dueDate: string;
-    timeSpent: string;
-    notes: string;
-  }
+  const navigate = useNavigate();
+  const [task, setTask] = useState<TaskType | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTask, setEditedTask] = useState<Partial<TaskType>>({});
 
-  const [coverImg, setCoverImg] = useState<string>(
-    "https://images.unsplash.com/photo-1731432245362-26f9c0f1ba2f?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  );
+  useEffect(() => {
+    if (id) {
+      const foundTask = taskStore.getTaskById(id);
+      if (foundTask) {
+        setTask(foundTask);
+        setEditedTask(foundTask);
+      }
+    }
+  }, [id]);
 
-  const changeCover = () => {
-    const newCover = prompt("Enter new cover image URL");
-    if (newCover) {
-      setCoverImg(newCover);
+  const handleSave = () => {
+    if (id && editedTask) {
+      const updated = taskStore.updateTask(id, editedTask);
+      if (updated) {
+        setTask(updated);
+        setIsEditing(false);
+      }
     }
   };
 
-  const [task, setTask] = useState<TaskType | null>(null);
-
-  useEffect(() => {
-    const fetchTask = async () => {
-      const response = await fetch("../../public/tasks.json"); // Update with actual path
-      const data = await response.json();
-      const foundTask = data.find((t: any) => t.id === id);
-      setTask(foundTask);
-    };
-
-    fetchTask();
-  }, [id]);
+  const handleDelete = () => {
+    if (id && window.confirm('Are you sure you want to delete this task?')) {
+      taskStore.deleteTask(id);
+      navigate('/');
+    }
+  };
 
   if (!task) {
-    return <div>Loading...</div>;
+    return <div className="ml-[300px] p-8">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-start justify-start ml-[300px] flex-1">
-      <div className="flex flex-col border-b-[1px] border-slate-200 w-full pb-3">
-        <div className="w-full h-[320px] bg-red-500 relative">
-          <img src={coverImg} alt="" className="w-full h-full object-cover" />
-          <button
-            className="absolute top-4 right-4 bg-slate-100 text-slate-400 px-2 py-1 rounded-md"
-            onClick={() => changeCover()}
-          >
-            Change Cover
-          </button>
+    <div className="min-h-screen flex flex-col ml-[300px] bg-slate-50 p-8">
+      <div className="bg-white rounded-lg shadow-sm border border-slate-200">
+        <div className="p-6 border-b border-slate-200">
+          {isEditing ? (
+            <div className="flex flex-col gap-4">
+              <input
+                type="text"
+                value={editedTask.title || ''}
+                onChange={(e) => setEditedTask({ ...editedTask, title: e.target.value })}
+                className="text-2xl font-semibold p-2 border rounded"
+              />
+              <div className="flex gap-2">
+                <button
+                  onClick={handleSave}
+                  className="bg-violet-600 text-white px-4 py-2 rounded-lg"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setIsEditing(false)}
+                  className="bg-slate-200 px-4 py-2 rounded-lg"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-semibold">{task.title}</h1>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-violet-600 text-white px-4 py-2 rounded-lg"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={handleDelete}
+                  className="bg-red-100 text-red-600 p-2 rounded-lg hover:bg-red-200"
+                >
+                  <Trash2 size={20} />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-        <div className="flex flex-col w-full p-4">
-          <h3 className="text-2xl ">{task.title}</h3>
-          <span className="border-[1px] bg-slate-100 border-slate-200 rounded-md px-2 cursor-pointer w-fit">
-            {task.createdOn}
-          </span>
+
+        <div className="p-6 grid grid-cols-2 gap-6">
+          <div className="flex items-center gap-3">
+            <Calendar className="text-violet-600" />
+            <div>
+              <p className="text-sm text-slate-500">Due Date</p>
+              <p>{new Date(task.dueDate).toLocaleDateString()}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Clock className="text-violet-600" />
+            <div>
+              <p className="text-sm text-slate-500">Created On</p>
+              <p>{new Date(task.createdOn).toLocaleDateString()}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Tag className="text-violet-600" />
+            <div>
+              <p className="text-sm text-slate-500">Category</p>
+              <p>{task.category}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Timer className="text-violet-600" />
+            <div>
+              <p className="text-sm text-slate-500">Time Spent</p>
+              <p>{task.hoursSpent}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-6 border-t border-slate-200">
+          <h2 className="font-semibold mb-4">Notes</h2>
+          {isEditing ? (
+            <textarea
+              value={editedTask.notes || ''}
+              onChange={(e) => setEditedTask({ ...editedTask, notes: e.target.value })}
+              className="w-full h-48 p-3 border rounded"
+            />
+          ) : (
+            <div className="prose max-w-none">
+              {task.notes.split('\n').map((line, i) => (
+                <p key={i}>{line}</p>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

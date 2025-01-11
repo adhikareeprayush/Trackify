@@ -1,40 +1,36 @@
-import { FaReact } from "react-icons/fa6";
-import { IoMdTimer } from "react-icons/io";
+import { ClipboardList, Timer, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
+import type { Task } from "../utils/taskStore";
 
-interface CardProps {
-  id: string;
-  title: string;
-  dueDate: string;
-  createdOn: string;
-  hoursSpent: number;
-}
+type CardProps = Task;
 
-const Card: React.FC<CardProps> = ({ id, title, dueDate, createdOn, hoursSpent }) => {
-  return (
-    <div className="flex flex-col gap-3 p-3 shadow-lg border-[0.3px] border-slate-300 rounded-md w-[400px]">
-      <div className="flex items-center gap-2">
-        <FaReact className="text-violet-600 text-2xl" />
-        <p className="font-semibold">{title}</p>
+const Card = ({ id, title, dueDate, hoursSpent, category }: CardProps) => {  return (
+    <div className="flex flex-col gap-4 p-6 bg-white shadow-sm border-[0.3px] border-slate-200 rounded-lg hover:shadow-md transition-shadow">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <ClipboardList className="text-violet-600" size={24} />
+          <div>
+            <h3 className="font-semibold text-lg">{title}</h3>
+            <span className="text-sm text-slate-500">{category}</span>
+          </div>
+        </div>
         <Link
           to={`/task/${id}`}
-          className="border-[1px] bg-slate-100 border-slate-200 rounded-md px-2 cursor-pointer"
+          className="bg-violet-50 text-violet-600 px-3 py-1 rounded-md hover:bg-violet-100 transition-colors"
         >
           Open
         </Link>
       </div>
-      <div className="flex flex-col gap-2">
-        <p className="text-sm text-slate-400">Due in {dueDate}</p>
-        <div className="flex flex-col">
-          <div className="flex flex-col gap-1">
-            <p className="text-base">
-              Created on <span className="font-regular text-violet-600">{createdOn}</span>
-            </p>
-            <div className="flex items-center gap-1">
-              <IoMdTimer className="text-violet-600 text-base" />
-              <p className="text-base">{hoursSpent} hours spent</p>
-            </div>
-          </div>
+
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2 text-slate-600">
+          <Calendar size={16} />
+          <p className="text-sm">Due {new Date(dueDate).toLocaleDateString()}</p>
+        </div>
+
+        <div className="flex items-center gap-2 text-slate-600">
+          <Timer size={16} />
+          <p className="text-sm">{hoursSpent} spent</p>
         </div>
       </div>
     </div>
