@@ -29,7 +29,7 @@ const Task = () => {
 
   useEffect(() => {
     const fetchTask = async () => {
-      const response = await fetch("../../tasks.json"); // Update with actual path
+      const response = await fetch("../../public/tasks.json"); // Update with actual path
       const data = await response.json();
       const foundTask = data.find((t: any) => t.id === id);
       setTask(foundTask);

@@ -16,14 +16,13 @@ const Home = () => {
   const [formattedDate] = useState<string>(getFormattedDate(date));
   useEffect(() => {
     const fetchTasks = async () => {
-      const response = await fetch("../../tasks.json"); // Update with actual path
+      const response = await fetch("../../public/tasks.json"); // Update with actual path
       const data = await response.json();
       setTasks(data);
     };
 
     fetchTasks();
   }, []);
-
 
   return (
     <div className="ml-[300px] flex flex-col gap-10 flex-1 min-h-screen bg-slate-100 p-4">
@@ -34,9 +33,12 @@ const Home = () => {
       <div className="flex items-center w-full flex-col gap-4">
         <div className="flex items-center w-full justify-between">
           <h4 className="text-2xl font-regular">
-            Ongoing Tasks <span className="text-violet-600">({tasks.length})</span>
+            Ongoing Tasks{" "}
+            <span className="text-violet-600">({tasks.length})</span>
           </h4>
-          <button className="text-lg text-violet-600 px-4 py-2 rounded-md">View all</button>
+          <button className="text-lg text-violet-600 px-4 py-2 rounded-md">
+            View all
+          </button>
         </div>
         <div className="flex items-center gap-2 flex-wrap w-full">
           {tasks.map((task) => (
