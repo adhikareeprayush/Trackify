@@ -1,16 +1,78 @@
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
+
 body {
-  font-family: "Lato", sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  @apply bg-slate-50;
 }
 
-p {
-  font-size: 1.2rem;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.font-stylish {
-  font-family: "Dancing Script", serif;
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-violet-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-violet-500;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Glass Effect */
+.glass-effect {
+  @apply bg-white bg-opacity-70 backdrop-blur-lg;
+}
+
+/* Card Hover Effect */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Custom Button Styles */
+.btn-primary {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-300 
+         bg-gradient-to-r from-indigo-500 to-purple-500 text-white
+         hover:from-indigo-600 hover:to-purple-600 hover:shadow-lg
+         active:scale-95;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-300
+         bg-white border border-slate-200 text-slate-700
+         hover:bg-slate-50 hover:border-slate-300
+         active:scale-95;
+}
+
+/* Input Styles */
+.input-primary {
+  @apply w-full px-4 py-2 rounded-lg border border-slate-200
+         focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent
+         transition-all duration-300;
 }
