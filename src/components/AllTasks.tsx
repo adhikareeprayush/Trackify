@@ -14,8 +14,8 @@ const AllTasks = () => {
   const categories = [...new Set(tasks.map(task => task.category))];
 
   const handleAddTask = (newTask: Omit<Task, 'id' | 'createdOn' | 'modifiedDate'>) => {
-    const task = taskStore.addTask(newTask);
-    setTasks(taskStore.getAllTasks());
+    taskStore.addTask(newTask);
+setTasks(taskStore.getAllTasks());
   };
 
   const filteredTasks = tasks.filter(task => {

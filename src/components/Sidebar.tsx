@@ -2,8 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { ClipboardList, Home, Settings, PlusCircle } from 'lucide-react';
 import { useState } from 'react';
 import NewTaskModal from './NewTaskModal';
-import { taskStore } from '../utils/taskStore';
-
+import { taskStore, type Task } from '../utils/taskStore';
 const Sidebar = () => {
   const location = useLocation();
   const [showNewTaskModal, setShowNewTaskModal] = useState(false);

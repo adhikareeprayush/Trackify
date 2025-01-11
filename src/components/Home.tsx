@@ -16,7 +16,7 @@ const Home = () => {
   }, []);
 
   const handleAddTask = (newTask: Omit<Task, 'id' | 'createdOn' | 'modifiedDate'>) => {
-    const task = taskStore.addTask(newTask);
+    taskStore.addTask(newTask);
     setTasks(taskStore.getAllTasks());
   };
 

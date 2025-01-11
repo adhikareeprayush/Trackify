@@ -4,8 +4,7 @@ import type { Task } from "../utils/taskStore";
 
 type CardProps = Task;
 
-const Card = ({ id, title, dueDate, createdOn, hoursSpent, category }: CardProps) => {
-  return (
+const Card = ({ id, title, dueDate, hoursSpent, category }: CardProps) => {  return (
     <div className="flex flex-col gap-4 p-6 bg-white shadow-sm border-[0.3px] border-slate-200 rounded-lg hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
